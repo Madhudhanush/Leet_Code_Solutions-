@@ -59,3 +59,46 @@ public class Codec {
 // Your Codec object will be instantiated and called as such:
 // Codec codec = new Codec();
 // codec.decode(codec.encode(url));
+
+
+//better code // 
+
+public class Codec {
+
+    HashMap<String, String> hash = new HashMap<>();
+    //HashMap<String,String>hash=new HashMap<>();
+    String character = "abcdefghijklmnopqrstuvmxzABCDEFFGHIJLMNOPQRSTUVWXYZ0123456789";
+    int length = 6;
+    String BASE_URL = "https://tinyurl.com/";
+    Random ran = new Random();
+    // int n=ran.nextInt(1000);
+    //int i = 0;
+
+    // Encodes a URL to a shortened URL.
+    public String encode(String longUrl) {
+        String key;
+        do {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < length; i++) {
+                sb.append(character.charAt(ran.nextInt(character.length())));
+            }
+            key = sb.toString();
+        } while (hash.containsKey(key));
+        {
+            hash.put(key,longUrl);
+            return BASE_URL + key;
+        }
+    }
+
+    // Decodes a shortened URL to its original URL.
+    public String decode(String shortUrl) {
+        //int key = Integer.parseInt(shortUrl.replaceAll(BASE_URL, ""));
+        String key = shortUrl.replaceAll(BASE_URL, "");
+        return hash.get(key);
+    }
+}
+
+// Your Codec object will be instantiated and called as such:
+// Codec codec = new Codec();
+// codec.decode(codec.encode(url));
